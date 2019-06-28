@@ -24,3 +24,7 @@ VALIDATION_SPEC = {"type": "object",
 TIMEOUT = 5
 
 MAX_COUNT = 5
+
+PORT = 5000
+
+HOST = "192.168.56.101"

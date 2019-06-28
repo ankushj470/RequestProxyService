@@ -1,30 +1,23 @@
 from flask import Flask, request,Response
-from urlparse import urlparse
-import validictory
-import config
-import requests
-
+import request_processor
 from service_utils import ValidationFailureException,RequestParseException,InvalidURLException,TimeOutException,RequestMaxedException
-
-import cache
-
+import config
 app =Flask(__name__)
-
-cache_obj = cache.cache()
 
 @app.route("/proxy_request", methods=["POST","GET"])
 
 def proxy_request():
     try:
-        request_dict = parse_request(request)
+        req_proc_obj = request_processor.RequestProcessor()
+        request_dict = req_proc_obj.parse_request(request)
 
-        validate_request(request_dict)
+        req_proc_obj.validate_request()
 
-        validate_req_cnt(request_dict['ClientID'])
+        req_proc_obj.validate_req_cnt()
         
-        #validate_url(request_dict['URL'])
+        req_proc_obj.validate_url()
 
-        response = send_Request(request_dict)
+        response = req_proc_obj.send_Request()
         
         resp = response.text
 
@@ -50,52 +43,5 @@ def proxy_request():
         return Response("Too many Requests",status ='429',mimetype='application/json')
         
 
-def parse_request(req_obj):
-    try:
-        req_data = req_obj.get_json()
-        return req_data
-    except:
-        raise RequestParseException
-
-def validate_request(req_dict):
-    try:
-        validictory.validate(req_dict, config.VALIDATION_SPEC)
-
-    except validictory.FieldValidationError:
-        raise ValidationFailureException
-
-def validate_req_cnt(ClientID):
-    if cache_obj.getcnt(ClientID) < config.MAX_COUNT:
-        cache_obj.inc_cnt(ClientID)
-    else:
-        raise RequestMaxedException
-
-
-def validate_url(url):
-    url_param = urlparse(url)
-    if url_param.scheme=='https':
-        return 1
-    else:
-        raise InvalidURLException
-            
-        
-def send_Request(req_dict):
-    try:
-        url = req_dict['URL']
-        data = req_dict['Request_Body']
-        Headers = req_dict['Headers']
-        req_type = req_dict['Request_Type']
-        if req_type == 'GET':
-            response =  requests.get(url,data,headers = eval(Headers),timeout=config.TIMEOUT)
-
-        elif req_type == 'POST':
-            response =  requests.post(url,data,headers=eval(Headers),timeout=config.TIMEOUT)
-            
-        return response
-
-    except:
-        raise TimeOutException
-    
-
 if __name__ == '__main__':
-    app.run(debug=True,port=5000,host='192.168.56.101')
+    app.run(debug=True,port=config.PORT,host=config.HOST)
