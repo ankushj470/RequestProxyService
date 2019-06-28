@@ -7,11 +7,17 @@ import cache
 
 cache_obj = cache.cache()
 class RequestProcessor():
+    """
+    This class processes the request
+    """
 
     def __init__(self):
         self.req_dict={}
     
     def parse_request(self,req_obj):
+        """
+        This method takes the request object and returns the request dictionary
+        """
         try:
             req_data = req_obj.get_json()
             self.req_dict = req_data
@@ -20,6 +26,10 @@ class RequestProcessor():
             raise RequestParseException
 
     def validate_request(self):
+        """
+        This method validates the req_dict based on validation_spec provided in config
+        """
+
         try:
             validictory.validate(self.req_dict, config.VALIDATION_SPEC)
 
@@ -27,6 +37,9 @@ class RequestProcessor():
             raise ValidationFailureException
 
     def validate_req_cnt(self):
+        """
+        This method validates the number of requests per clientid
+        """
         ClientID = self.req_dict['ClientID']
         if cache_obj.getcnt(ClientID) < config.MAX_COUNT:
             cache_obj.inc_cnt(ClientID)
@@ -35,6 +48,9 @@ class RequestProcessor():
 
 
     def validate_url(self):
+        """
+        This method validates the url provided by the client and throws exception if non https url
+        """
         url_param = urlparse(self.req_dict['URL'])
         if url_param.scheme=='https':
             return
@@ -43,6 +59,9 @@ class RequestProcessor():
 
 
     def send_Request(self):
+        """
+        This method sends the request to the url and returns the response
+        """
         try:
             url = self.req_dict['URL']
             data = self.req_dict['Request_Body']

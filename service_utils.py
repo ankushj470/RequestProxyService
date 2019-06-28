@@ -23,13 +23,13 @@ class InvalidURLException(Exception):
 class TimeOutException(Exception):
     """
     @summary: Exception class to be used while raising exceptions
-        related to URL issue.
+            related to Timeout
     """
     pass
 
 class RequestMaxedException(Exception):
     """
     @summary: Exception class to be used while raising exceptions
-        related to URL issue.
+        related to request max outs
     """
     pass

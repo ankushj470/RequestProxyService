@@ -7,6 +7,9 @@ app =Flask(__name__)
 @app.route("/proxy_request", methods=["POST","GET"])
 
 def proxy_request():
+    """
+    This method takes the request and returns the response and response code
+    """
     try:
         req_proc_obj = request_processor.RequestProcessor()
         request_dict = req_proc_obj.parse_request(request)
