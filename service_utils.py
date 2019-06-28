@@ -6,13 +6,6 @@ class RequestParseException(Exception):
     pass
 
 
-class AuthenticationFailureException(Exception):
-    """
-    @summary: Exception class to be used while raising exceptions
-        related to failure of request authentication.
-    """
-    pass
-
 class ValidationFailureException(Exception):
     """
     @summary: Exception class to be used while raising exceptions
