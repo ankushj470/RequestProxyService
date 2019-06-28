@@ -23,7 +23,7 @@ VALIDATION_SPEC = {"type": "object",
 
 TIMEOUT = 5
 
-MAX_COUNT = 5
+MAX_COUNT = 50
 
 PORT = 5000
 
