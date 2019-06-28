@@ -19,3 +19,8 @@ VALIDATION_SPEC = {"type": "object",
 
 
                    }
+
+
+TIMEOUT = 5
+
+MAX_COUNT = 5

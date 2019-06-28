@@ -1,10 +1,3 @@
-class DataFetchException(Exception):
-    """
-    @summary: Exception class to be used while raising exceptions
-        related to data extraction from test database.
-    """
-    pass
-
 class RequestParseException(Exception):
     """
     @summary: Exception class to be used while raising exceptions
@@ -12,12 +5,6 @@ class RequestParseException(Exception):
     """
     pass
 
-class InvalidTestDataException(Exception):
-    """
-    @summary: Exception class to be used while raising exceptions
-        related to either non availability or ambiguous test data.
-    """
-    pass
 
 class AuthenticationFailureException(Exception):
     """
@@ -33,3 +20,23 @@ class ValidationFailureException(Exception):
     """
     pass
 
+class InvalidURLException(Exception):
+    """
+    @summary: Exception class to be used while raising exceptions
+        related to URL issue.
+    """
+    pass
+
+class TimeOutException(Exception):
+    """
+    @summary: Exception class to be used while raising exceptions
+        related to URL issue.
+    """
+    pass
+
+class RequestMaxedException(Exception):
+    """
+    @summary: Exception class to be used while raising exceptions
+        related to URL issue.
+    """
+    pass
