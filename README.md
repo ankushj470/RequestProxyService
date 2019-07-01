@@ -2,6 +2,8 @@
 Request Proxy Service acts like a typical proxy to replay an HTTPS request to specified URL and returns back the response.
 
 #Prerequisite
+This service is made on Python 2.7.10 and flask 0.10.1
+
 You should have following modules to run this service:
 
 1. flask
@@ -13,7 +15,7 @@ You should have following modules to run this service:
 #Steps to Run Service
 Please Follow following steps to run service:
 
-1. Run exec.py file : python exec.py (Currently host is given in 192.168.56.101 and port =5000, to change please change HOST and PORT value in config.py file)
+1. Run exec.py file : python exec.py (Currently host is given in localhost and port =5000, to change please change HOST and PORT value in config.py file)
    This step will run the flask service
 
 2. To run the sample input: python poster/service_poster.py (service_poster fetches the sample input from poster_input.py,please change the input based on your testing data)
